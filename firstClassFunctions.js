@@ -5,3 +5,12 @@ var hi = function(name){
 var greeting = function(name){
     return hi(name);
 }
+
+var result = greeting('fahad');
+console.log(result);
+
+greeting = hi;
+console.log(greeting);
+
+var res = greeting('times');
+console.log(res);
