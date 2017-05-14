@@ -17,3 +17,21 @@ console.log('sq', square);
 console.log(square(4))   // 16 calculated
 console.log(square(5))   // 16 from cache
 
+
+console.log('');
+console.log('');
+
+// immutability
+
+var createPoint = (x,y) => Object.freeze([x,y]);
+
+var movePoint = ([x,y], dx, dy) => {
+    return Object.freeze([x+dx, y+dy]);
+}
+
+var point = createPoint(1,1);
+
+point = movePoint(point, 1,3);
+console.log('Point: ', point);
+point = movePoint(point, 2,4);
+console.log('Point: ', point);
