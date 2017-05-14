@@ -3,13 +3,9 @@
 
 var memoize = function(f) {
     var cache = {};
-    console.log('first arguments ', arguments);
     return function() {
-        console.log('second arguments ', arguments)
         var arg_str = JSON.stringify(arguments);
-        console.log('args ',arg_str);
         cache[arg_str] = cache[arg_str] || f.apply(f, arguments);
-        console.log('cache ', cache);
         return cache[arg_str];
     };
 };
@@ -17,6 +13,7 @@ var memoize = function(f) {
 var square = memoize(function(x){
     return x * x
 })
-
+console.log('sq', square);
 console.log(square(4))   // 16 calculated
-console.log(square(4))   // 16 from cache
+console.log(square(5))   // 16 from cache
+
