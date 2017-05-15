@@ -15,3 +15,19 @@ var partial = (fn, ...args) => {
         return fn(...args, ...otherArgs);
     }
 }
+
+// May be we don't need to call partial manually and function can do it themselves.
+// This is called currying!
+
+// Example
+
+var adder = function(x){
+    return function(y){
+        return function(z){
+            return x + y + z;
+        }
+    }
+}
+
+var result = adder(1)(2)(3);
+console.log(result);
