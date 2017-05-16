@@ -26,12 +26,51 @@
 // console.log(newArr1);
 
 // version 2 - now testing team becomes part of the engineering team.
+//
+// var testingTeam = {
+//     manager: 'Joe',
+//     tester: 'Kevin'
+// }
+//
+//
+// var engineeringTeam = {
+//     testingTeam: testingTeam,
+//     size: 3,
+//     department: 'Engineering',
+//     manager: 'Alan',
+//     lead: 'Steve',
+//     engineer: 'Bob'
+// }
+
+// function* engineeringTeamIterator(team) {
+//     yield team.manager;
+//     yield team.engineer;
+//     yield team.lead;
+//     var testTeam = testTeamIterator(team.testingTeam);
+//     yield* testTeam;
+// }
+//
+// function* testTeamIterator(team){
+//     yield team.manager;
+//     yield team.tester;
+// }
+//
+// var newArr2 = [];
+// for(let val of engineeringTeamIterator(engineeringTeam)){
+//     newArr2.push(val)
+// }
+// console.log(newArr2);
+
+// version 3 - using Symbol Iterators;
 
 var testingTeam = {
     manager: 'Joe',
-    tester: 'Kevin'
+    tester: 'Kevin',
+    [Symbol.iterator]: function* (){
+        yield this.manager;
+        yield this.tester;
+    }
 }
-
 
 var engineeringTeam = {
     testingTeam: testingTeam,
@@ -39,24 +78,17 @@ var engineeringTeam = {
     department: 'Engineering',
     manager: 'Alan',
     lead: 'Steve',
-    engineer: 'Bob'
+    engineer: 'Bob',
+    [Symbol.iterator]: function* (){
+        yield this.manager;
+        yield this.lead;
+        yield this.engineer;
+        yield* this.testingTeam;
+    }
 }
 
-function* engineeringTeamIterator(team) {
-    yield team.manager;
-    yield team.engineer;
-    yield team.lead;
-    var testTeam = testTeamIterator(team.testingTeam);
-    yield* testTeam;
+var newArr = [];
+for(let val of engineeringTeam){
+    newArr.push(val);
 }
-
-function* testTeamIterator(team){
-    yield team.manager;
-    yield team.tester;
-}
-
-var newArr2 = [];
-for(let val of engineeringTeamIterator(engineeringTeam)){
-    newArr2.push(val)
-}
-console.log(newArr2);
+console.log(newArr);
